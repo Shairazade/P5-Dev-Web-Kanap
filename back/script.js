@@ -39,7 +39,7 @@ async function getProducts() {
   }
 }
 
-getProducts();
+const products = getProducts();
 
 
 function productIdFromUrl() {
@@ -51,6 +51,45 @@ function productIdFromUrl() {
 const productId = productIdFromUrl();
 console.log(productId);
 
+// Récupération des détails du produit depuis l'API
+async function getProductDetails(productId) {
+  try {
+    const response = await fetch('http://localhost:3000/api/products/' + productId);
+    const data = await response.json();
 
+// Insertion des détails du produit dans la page HTML
+   
+
+      const imageElement = document.getElementById('item-img');
+      let image = document.createElement('img');
+      image.src = data.imageUrl;
+      image.alt = data.altTxt;
+      imageElement.appendChild(image);
+      
+      
+      const productName = document.getElementById('title');
+      productName.textContent = data.name;
+
+      const productDescription = document.getElementById('description');
+      productDescription.textContent = data.description;
+
+      const productPrice = document.getElementById('price');
+      productPrice.textContent = data.price;
+
+      
+      const productColor= document.getElementById('colors');
+      data.colors.forEach((color) => {
+      const colorOption = document.createElement('option');
+      colorOption.textContent = color;
+      productColor.appendChild(colorOption);
+    });
+  
+// Capturer les erreurs qui pourrait survenir pendant la récupération des données depuis l'API
+  } catch (error) {
+    console.error(error);
+  }
+}
+  
+  getProductDetails(productId);
 
 
