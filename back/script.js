@@ -135,3 +135,6 @@ addButton.addEventListener('click', () => {
 
 console.log(cart);
 
+
+
+// AFFICHER LES ELEMENTS DU PANIER 
