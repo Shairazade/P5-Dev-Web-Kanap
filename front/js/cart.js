@@ -40,7 +40,7 @@ function collectCartItem() {
           const article = document.createElement('article');
           article.classList.add('cart__item');
           article.dataset.id = data.productId;
-          article.dataset.id = data.productColor;
+          article.dataset.color = data.productColor;
           cartContainer.appendChild(article);
 
           const itemImage = document.createElement('div');
