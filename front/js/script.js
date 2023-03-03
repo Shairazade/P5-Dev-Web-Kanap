@@ -5,7 +5,6 @@ async function getProducts() {
       const data = await response.json();
   
       
-      
   
   // ET INSERER PRODUIT DANS LA PAGE D'ACCUEIL 
   
