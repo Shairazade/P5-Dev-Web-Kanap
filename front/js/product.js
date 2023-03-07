@@ -89,5 +89,5 @@ addButton.addEventListener('click', () => {
 console.log(cart);
 
 
- 
+
 

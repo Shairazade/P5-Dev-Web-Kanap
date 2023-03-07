@@ -28,19 +28,22 @@ function collectCartItem() {
 // AFFICHER UN TABLEAU RECAPITULATIF DES PRODUITS DANS LE PANIER
     async function displayCartProduct() {
     try {
-        const response = await fetch('http://localhost:3000/api/products');
-        const data = await response.json();
   
         const products = collectCartItem();
-        
         const cartContainer = document.getElementById('cart__items');
         cartContainer.innerHTML = '';
 
         for (const item of products) {
+            const response = await fetch('http://localhost:3000/api/products/' + item.productId);
+            const data = await response.json();
+            console.log(data);
+            console.log(item)
+
+
           const article = document.createElement('article');
           article.classList.add('cart__item');
-          article.dataset.id = data.productId;
-          article.dataset.color = data.productColor;
+          article.dataset.id = data._id;
+          article.dataset.color = data.colors;
           cartContainer.appendChild(article);
 
           const itemImage = document.createElement('div');
@@ -48,8 +51,8 @@ function collectCartItem() {
           article.appendChild(itemImage);
 
           const image = document.createElement('img');
-          image.src = item.imageUrl;
-          image.alt = item.altTxt;
+          image.src = data.imageUrl;
+          image.alt = data.altTxt;
           itemImage.appendChild(image);
 
           const itemContent = document.createElement('div');
@@ -61,13 +64,13 @@ function collectCartItem() {
           itemContent.appendChild(itemDescription);
         
           const name = document.createElement('h2');
-          name.textContent = item.name;
+          name.textContent = data.name;
           itemDescription.appendChild(name);
           const color = document.createElement('p');
           color.textContent = item.color; 
           itemDescription.appendChild(color);
           const price = document.createElement('p');
-          price.textContent = `${item.price} €`;
+          price.textContent = `${data.price} €`;
           itemDescription.appendChild(price);
 
           const itemContentSetting = document.createElement('div');
@@ -99,24 +102,46 @@ function collectCartItem() {
           deleteButton.classList.add('deleteItem');
           deleteButton.textContent = 'Supprimer';
           deleteContainer.appendChild(deleteButton);    
-
         }
         
     } catch (error) {
         console.error(error);
     }
-   
+    }
+    displayCartProduct();
+
+// Ajout des eventisteners pour les modification et supression
+    const cartContainer = document.getElementById('cart__items');
+    cartContainer.addEventListener('click', (event) => {
+        const target = event.target;
+        
+        // suppression d'un produit dans le panier
+        if (target.classList.contains('deleteItem')) {
+        deleteCartItem(target);
+        }
+        
+        // modification de la quantité d'un produit dans le panier
+        if (target.classList.contains('itemQuantity')) {
+        updateCartItem(target);
+        }
+        });
+
+// SUPPRIMER UN PRODUIT DU PANIER
+function deleteCartItem(target) {
+    const productArticle = target.closest('.cart__item');
+    const productId = productArticle.dataset.id;
+    const productColor = productArticle.dataset.color;
+    
+    // Supprimer le produit du localStorage
+    const cartItems = JSON.parse(localStorage.getItem('cart'));
+    const updatedCartItems = cartItems.filter(item => !(item.id === productId && item.color === productColor));
+    localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+    
+    // Réafficher tous les produits dans le panier (moins celui qui vient d'être supprimé)
+    displayCartProduct();
     }
 
-    displayCartProduct();
+
+
+
    
-   
-
-
-
-
-
-
-
-
-
