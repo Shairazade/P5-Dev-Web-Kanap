@@ -70,6 +70,8 @@ function addToCart(productId, quantity, color) {
   } else {
     alert(`Veuillez rajouter les éléments manquant`);
   }
+
+  
 }
 
 const addButton = document.getElementById('addToCart');
