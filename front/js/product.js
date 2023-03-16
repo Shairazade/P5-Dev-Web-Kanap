@@ -1,3 +1,29 @@
+  // COLLECTER LES PRODUITS DU PANIER
+function collectCartItem() {
+  const cartItems = JSON.parse(localStorage.getItem('cart'));
+  const products = [];
+
+  if (cartItems !== null) {
+      cartItems.forEach(item => {
+        let productExists = false;
+        products.forEach(product => {
+          if (item.id === product.id && item.color === product.color) {
+            product.quantity += item.quantity;
+            productExists = true;
+          }
+        });
+  
+        if (!productExists) {
+          products.push(item);
+        }
+      });
+    }
+  
+    return products;
+  }
+
+      collectCartItem();
+
   // RECUPERER L'ID DU PRODUIT A AFFICHER 
   function productIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
@@ -55,23 +81,28 @@ let cart = [];
 
 function addToCart(productId, quantity, color) {
   if (productId && quantity && color) {
-    const index = cart.findIndex(item => item.productId === productId && item.color === color);
-    if (index !== -1) {
-      cart[index].quantity += quantity;
+    if(quantity >=1 & quantity <=100) {
+      cart = collectCartItem();
+      const index = cart.findIndex(item => item.productId === productId && item.color === color);
+      if (index !== -1) {
+        cart[index].quantity += quantity;
+      } else {
+        cart.push({
+          productId,
+          quantity,
+          color
+        });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`Le produit a été ajouté au panier !`);
     } else {
-      cart.push({
-        productId,
-        quantity,
-        color
-      });
+      alert('La quantité ne peut être comprise qu\'entre 1 et 100');
     }
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`Le produit a été ajouté au panier !`);
-  } else {
-    alert(`Veuillez rajouter les éléments manquant`);
-  }
 
-  
+  } else {
+      alert(`Veuillez rajouter les éléments manquant`);
+  }
+ 
 }
 
 const addButton = document.getElementById('addToCart');
