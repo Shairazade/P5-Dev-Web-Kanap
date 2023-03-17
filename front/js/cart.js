@@ -107,10 +107,7 @@ function collectCartItem() {
     }
 
  collectCartItem();
-
-
-
-    
+  
 
 //  SUPPRIMER UN PRODUIT
 
@@ -133,15 +130,15 @@ function collectCartItem() {
 
 deleteCartItem();*/
 
-const deleteItemButton = document.querySelectorAll('.deleteItem');
+var deleteItemButton = document.getElementsByClassName("deleteItem");
 
 function deleteCartItem() {
   let cart = collectCartItem();
-
-  for (let input of deleteItemButton) {
-      console.log(input);
-      input.addEventListener('click', () => {
-      console.log(input.id);
+   console.log(deleteItemButton);
+  for (let i = 1 ; i< deleteItemButton.length ; i++) {
+      console.log(1);
+            input.addEventListener('click', () => {
+      // console.log(input.id);
       if (window.confirm('Supprimer le produit ?'))
       {
         let i = 0;
@@ -157,7 +154,7 @@ function deleteCartItem() {
     })
   }
 }
-
+deleteCartItem();
 
 // MODIFIER LA QUANTITE
   const inputQuantity = document.querySelectorAll('.itemQuantity');
@@ -181,11 +178,11 @@ function deleteCartItem() {
    }
   }
     updateQuantity();
-
+    const totalQuantity = document.getElementById("totalQuantity");
 // RECALCULE DES QUANTITE 
 function totalProduct() {
-  const quantityProduct = document.querySelectorAll(".itemQuantity");
-  console.log(quantityProduct.length);
+  const quantityProduct = document.querySelectorAll("itemQuantity");
+  
   let totalNumber = 0;
   quantityProduct.forEach((quantity) => {
      totalNumber += parseInt(quantity.value);
