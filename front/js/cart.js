@@ -90,8 +90,9 @@ async function getProduct(productId) {
                      p.quantity = modifyQuantity;
                   }
                });
-               localStorage.setItem("cart", JSON.stringify(cartItems));
+               localStorage.setItem("cart", JSON.stringify(cartItems));              
                totalProduct();
+               
             }
          });
       }
