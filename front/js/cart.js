@@ -91,7 +91,7 @@ async function getProduct(productId) {
                   }
                });
                localStorage.setItem("cart", JSON.stringify(cartItems));              
-               totalProduct();               
+               location.reload();              
            
                
             }
