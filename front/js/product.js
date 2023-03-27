@@ -112,7 +112,7 @@ addButton.addEventListener('click', () => {
   const productId = queryParams.get('id');
   const productQuantity = parseInt(document.getElementById('quantity').value);
   if (isNaN(productQuantity) || productQuantity <= 0) {
-    alert('Veuillez saisir une quantité valide.');
+    alert('Veuillez rajouter les élements manquants.');
     return;
   }
   const productColor = document.getElementById('colors').value;

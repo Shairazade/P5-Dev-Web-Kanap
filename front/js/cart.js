@@ -91,7 +91,8 @@ async function getProduct(productId) {
                   }
                });
                localStorage.setItem("cart", JSON.stringify(cartItems));              
-               totalProduct();
+               totalProduct();               
+           
                
             }
          });
@@ -121,6 +122,25 @@ async function getProduct(productId) {
       }
    }
  
+ // RECALCULE DES QUANTITE 
+   function totalProduct() {
+      const quantityProduct = document.querySelectorAll(".itemQuantity");
+      let totalNumber = 0;
+      quantityProduct.forEach((quantity) => {
+         totalNumber += parseInt(quantity.value);        
+      });
+      totalQuantity.innerText = totalNumber;
+   }
+ 
+ 
+ // PRIX TOTAL
+ function displayTotalPrice(){
+   const getTotalPrice = document.getElementById("totalPrice");
+   getTotalPrice.innerText = totalPrice;
+ }
+
+ 
+
  // BOUTON COMMANDE 
  
    function validCommand() {
@@ -132,9 +152,9 @@ async function getProduct(productId) {
             if (validateForm()) {
               let productOrder = [];
                cartItems.forEach(order => {
-                 productOrder.push(order.id);
+                 productOrder.push(order.productId);
                });
-               const order = {
+               const order = {                  
                   contact: {
                     firstName: firstName.value,
                     lastName: lastName.value,
@@ -144,6 +164,7 @@ async function getProduct(productId) {
                   },
                  products: productOrder,
                };
+               
                addServer(order);
             } else {
               e.preventDefault();
@@ -156,27 +177,10 @@ async function getProduct(productId) {
       });
    }
 
- // RECALCULE DES QUANTITE 
-   function totalProduct() {
-      const quantityProduct = document.querySelectorAll(".itemQuantity");
-      let totalNumber = 0;
-      quantityProduct.forEach((quantity) => {
-         totalNumber += parseInt(quantity.value);        
-      });
-      totalQuantity.innerText = totalNumber;
-   }
+
  
  
- 
- // PRIX TOTAL
- function displayTotalPrice(){
-   const getTotalPrice = document.getElementById("totalPrice");
-   getTotalPrice.innerText = totalPrice;
- }
- 
- 
- 
-    //-------------- FORMULAIRE------------------
+//-------------- FORMULAIRE------------------
  
  
  function validateForm() {
@@ -228,14 +232,12 @@ async function getProduct(productId) {
          "Veuillez saisir une adresse mail valide";
    }
    return validData;
+   
  
  }
- 
 
  // envoi au backend
-   function addServer(order) {
-      console.log(order);
-      
+   function addServer(order) {  
       fetch("http://localhost:3000/api/products/order", {
          method: "POST",
          headers: {
@@ -244,8 +246,7 @@ async function getProduct(productId) {
          body: JSON.stringify(order),
       })
          .then((response) => response.json())
-         .then((response) => {  
-            console.log(response);        
+         .then((response) => {         
             localStorage.clear();
             window.location.href = "./confirmation.html?orderId=" + response.orderId;
          })
