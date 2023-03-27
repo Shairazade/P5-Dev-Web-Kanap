@@ -171,12 +171,6 @@ async function getProduct(productId) {
          total += parseInt(quantityProduct[i].value) * parseInt(priceProduct[i].innerHTML);
       }
 
-      /*quantityProduct.forEach((quantity) => {
-
-         totalNumber += parseInt(quantity.value);        
-
-      });*/
-
       totalQuantity.innerText = totalNumber;
       document.getElementById("totalPrice").innerHTML = total;
 
