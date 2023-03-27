@@ -3,6 +3,7 @@ function collectCartItem() {
   const cartItems = JSON.parse(localStorage.getItem('cart'));
   const products = [];
 
+// récupère les produits depuis le localStorage
   if (cartItems !== null) {
       cartItems.forEach(item => {
         let productExists = false;
