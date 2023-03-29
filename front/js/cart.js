@@ -57,7 +57,6 @@ async function getProduct(productId) {
                <div class="cart__item__content__description">
                <h2>${baseProduct.name}</h2>
                <p>${product.color}</p>
-               <p>${baseProduct.price} €</p>
                <p><span class="item_price_cart">${baseProduct.price}</span> €</p>
                </div>
                <div class="cart__item__content__settings">
